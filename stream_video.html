@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stream Video</title>
+</head>
+<body>
+<h1>Realtime communication with WebRTC</h1>
+
+<video autoplay playsinline></video>
+
+<script>
+  'use strict';
+
+  const mediaStreamConstraints = {
+		video: {
+			width: {
+				min: 500
+			},
+			height: {
+				min: 500
+			}
+		},
+    audio: true
+  };
+
+  const localVideo = document.querySelector('video');
+
+  let localStream;
+
+  function gotLocalMediaStream(mediaStream) {
+  	localStream = mediaStream;
+  	localVideo.srcObject = mediaStream;
+  }
+
+  function handleLocalMediaStreamError(error) {
+    console.log('navigator.getUserMedia error: ', error);
+	}
+
+	navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
+    .then(gotLocalMediaStream).catch(handleLocalMediaStreamError);
+
+</script>
+</body>
+</html>
